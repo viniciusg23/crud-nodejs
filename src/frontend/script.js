@@ -46,6 +46,20 @@ function validForm(){
 function save(functionary){
 
     functionary.salary = parseFloat(functionary.salary).toFixed(2);
+
+    const options =  {
+        headers: {"Content-Type": "application/json"},
+        method: "POST",
+        body: JSON.stringify(functionary)
+    }
+
+    fetch("http://localhost:3000/user/login", options).then(res =>{
+        return res.json();
+    }).then((result) =>{
+        
+        
+    });
+
     console.log(functionary);
 }
 
