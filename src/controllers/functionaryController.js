@@ -1,4 +1,4 @@
-const functionaryData = require("../models/db");
+const functionaryData = require("../models/db").functionary;
 
 
 const controller = {
@@ -6,6 +6,7 @@ const controller = {
         res.json(functionaryData);
     },
     add: function(req, res){
+        
         const functionary = {
             id: generateId(),
             name: req.body.name,
@@ -31,7 +32,7 @@ const controller = {
 
         }
         else{
-            
+
         }
 
 

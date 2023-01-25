@@ -12,13 +12,8 @@
 </head>
 <body style="background-color: #00000010;">
 
-    <!-- Button trigger modal -->
-    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Launch demo modal
-    </button> -->
-    
-    <!-- Modal -->
-    <div class="modal fade" id="form" tabindex="-1" aria-labelledby="label" aria-hidden="true">
+    <!-- modal para cadastro de funcionarios -->
+    <div class="modal fade" id="form-functionary" tabindex="-1" aria-labelledby="label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -48,7 +43,36 @@
                 </form>
             </div>
             <div class="modal-footer justify-content-center">
-                <button onclick="validForm()" type="button" class="d-block w-100 btn btn-primary">Salvar</button>
+                <button onclick="validFunctionary()" type="button" class="d-block w-100 btn btn-primary">Salvar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- modal para cadastro de cargos -->
+    <div class="modal fade" id="form-occupation" tabindex="-1" aria-labelledby="label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="label">Adicionar Novo Cargo</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <b class="">Lista de Cargos Existentes</b>
+                <ul id="occupation-list" class="list-group mt-2">
+
+                    <!-- JavaScript content -->
+
+                </ul>
+            </div>
+            <div class="modal-footer justify-content-center">
+
+                <div class="d-block w-100 form-floating mb-2">
+                    <input type="text" class="form-control border-primary" id="new-occupation" placeholder="Nova Função">
+                    <label for="occupation">Nova Função</label>
+                </div>
+                
+                <button onclick="validOccupation()" type="button" class="d-block w-100 btn btn-primary">Salvar</button>
             </div>
         </div>
         </div>
@@ -57,7 +81,11 @@
     <div class="container-md  my-5 px-2 py-4 rounded bg-light" style="height: 85vh;">
         <div id="header" class="d-flex justify-content-between">
             <h4>Controle de Funcionários</h4>
-            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#form">Adicionar</a>
+            <div>
+                <a onclick="loadOccupation()" type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#form-occupation">Adicionar Função</a>
+                <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#form-functionary">Adicionar Funcionário</a>
+            </div>
+            
         </div>
         <div id="body" class="mt-4">
 

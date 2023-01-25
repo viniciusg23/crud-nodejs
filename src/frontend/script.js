@@ -27,9 +27,10 @@ function load(){
 
     })
 }
+
 load();
 
-function validForm(){
+function validFunctionary(){
     const functionary = {
         name: document.getElementById("name").value,
         occupation: document.getElementById("occupation").value,
@@ -39,11 +40,11 @@ function validForm(){
     //console.log(functionary);
 
     if(functionary.name != '' && functionary.occupation != '' && functionary.salary != ''){
-        save(functionary);
+        saveFunctionary(functionary);
     }
 }   
 
-function save(functionary){
+function saveFunctionary(functionary){
 
     functionary.salary = parseFloat(functionary.salary).toFixed(2);
 
@@ -53,7 +54,7 @@ function save(functionary){
         body: JSON.stringify(functionary)
     }
 
-    fetch("http://localhost:3000/user/login", options).then(res =>{
+    fetch("http://localhost:3000/functionary/add", options).then(res =>{
         return res.json();
     }).then((result) =>{
         
@@ -62,8 +63,6 @@ function save(functionary){
 
     console.log(functionary);
 }
-
-
 
 
 
@@ -77,4 +76,59 @@ function remove(id){
     console.log(id)
 
 
+}
+
+
+
+
+// espaco para os métodos relacionados com as funções de trabalhadores
+function loadOccupation(){
+    let list = document.getElementById("occupation-list");
+    document.getElementById("new-occupation").value = "";
+
+    fetch("http://localhost:3000/occupation/all").then((res) => {return res.json()}).then((data) =>{
+        list.innerHTML = "";
+
+        data.forEach((item) =>{
+            list.innerHTML += 
+            `
+            <li class="list-group-item d-flex justify-content-between">
+                <p class="mb-0">${item.occupation}</p>
+                <a onclick="removeOccupation(${item.id})" class="d-flex aling-items-center"><img src="./icons/delete.png" width="20"></a>
+            </li>
+            `
+        })
+    })
+}
+
+function validOccupation(){
+    let occupation = document.getElementById("new-occupation").value;
+
+    if(occupation != ""){
+        saveOccupation({occupation: occupation})
+    }
+    else{
+        alert("Cargo não pode estar vazio.");
+    }
+}
+
+function saveOccupation(occupation){
+    const options =  {
+        headers: {"Content-Type": "application/json"},
+        method: "POST",
+        body: JSON.stringify(occupation)
+    }
+
+    fetch("http://localhost:3000/occupation/add", options).then(res =>{
+        return res.json();
+    }).then((result) =>{
+        
+        console.log(result);
+
+        if(!result.valid)
+            alert(`ERRO: ${result.message}`);
+    });
+
+
+    loadOccupation()
 }
