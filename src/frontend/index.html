@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- <a href="https://www.flaticon.com/br/icones-gratis/ui" title="ui ícones">Ui ícones criados por Ferdinand - Flaticon</a> -->
+    <!-- <a href="https://www.flaticon.com/br/icones-gratis/editar" title="editar ícones">Editar ícones criados por Freepik - Flaticon</a> -->
+
+    <title>Crud NodeJs</title>
+</head>
+<body style="background-color: #00000010;">
+
+    <!-- Button trigger modal -->
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button> -->
+    
+    <!-- Modal -->
+    <div class="modal fade" id="form" tabindex="-1" aria-labelledby="label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="label">Adicionar Novo Funcionário</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="name" placeholder="Nome do Funcionário">
+                        <label for="name">Nome</label>
+                      </div>
+
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="occupation" placeholder="Função do Funcionário">
+                        <label for="occupation">Função</label>
+                      </div>
+
+                      <div class="input-group mb-3">
+                        <span class="input-group-text">R$</span>
+                        <div class="form-floating">
+                            <input type="number" min="1" class="form-control" id="salary" placeholder="Salário do Funcionário">
+                            <label for="salary">Salário</label>
+                        </div>
+                        <span class="input-group-text">.00</span>
+                      </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button onclick="validForm()" type="button" class="d-block w-100 btn btn-primary">Salvar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="container-md  my-5 px-2 py-4 rounded bg-light" style="height: 85vh;">
+        <div id="header" class="d-flex justify-content-between">
+            <h4>Controle de Funcionários</h4>
+            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#form">Adicionar</a>
+        </div>
+        <div id="body" class="mt-4">
+
+            <table class="table">
+                <thead class="table-secondary">
+                  <tr class="">
+                    <th scope="col" class="col-1">#id</th>
+                    <th scope="col" class="col-4">Nome</th>
+                    <th scope="col" class="col-3">Função</th>
+                    <th scope="col" class="col-2">Salário</th>
+                    <th scope="col" class="col-1 text-warning text-center">Editar</th>
+                    <th scope="col" class="col-1 text-danger text-center">Excluir</th>
+                  </tr>
+                </thead>
+                <tbody id="table-body">
+                 
+                </tbody>
+              </table>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
