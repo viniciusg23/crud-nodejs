@@ -28,6 +28,14 @@ const controller = {
     },
     remove: function(req, res){
 
+        //removendo um cargo do "banco de dados"
+        for(i = 0; i < occupationData.length; i++){
+            if(occupationData[i].id == req.params.id){
+                occupationData.splice(i, 1);
+            }
+        }
+
+        res.json({valid: true, message: "Cargo removido com sucesso."});
     }
 }
 

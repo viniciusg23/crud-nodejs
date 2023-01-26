@@ -30,10 +30,26 @@ function load(){
 
 load();
 
+function loadForm(){
+    document.getElementById("name").value = "";
+    document.getElementById("salary").value = "";
+
+
+    let select = document.getElementById("occupation-select");
+
+    fetch("http://localhost:3000/occupation/all").then((res) =>{return res.json()}).then((data) =>{
+        select.innerHTML = "<option selected disabled>Selecione um Cargo</option>";
+
+        data.forEach((item) =>{
+            select.innerHTML += `<option value="${item.id}">${item.occupation}</option>`
+        })
+    })
+}
+
 function validFunctionary(){
     const functionary = {
         name: document.getElementById("name").value,
-        occupation: document.getElementById("occupation").value,
+        occupation: document.getElementById("occupation-select").value,
         salary: document.getElementById("salary").value
     }
 
@@ -57,11 +73,14 @@ function saveFunctionary(functionary){
     fetch("http://localhost:3000/functionary/add", options).then(res =>{
         return res.json();
     }).then((result) =>{
-        
-        
+        if(result.valid){
+            document.getElementById("close-functionary").click();
+
+            alert("Funcionário Cadastrado com Sucesso!");
+        }
     });
 
-    console.log(functionary);
+    load();
 }
 
 
@@ -94,7 +113,7 @@ function loadOccupation(){
             `
             <li class="list-group-item d-flex justify-content-between">
                 <p class="mb-0">${item.occupation}</p>
-                <a onclick="removeOccupation(${item.id})" class="d-flex aling-items-center"><img src="./icons/delete.png" width="20"></a>
+                <a onclick="removeOccupation('${item.id}')" class="d-flex aling-items-center" href="#"><img src="./icons/delete.png" width="20"></a>
             </li>
             `
         })
@@ -130,5 +149,20 @@ function saveOccupation(occupation){
     });
 
 
-    loadOccupation()
+    loadOccupation();
+}
+
+function removeOccupation(id){
+
+    fetch(`http://localhost:3000/occupation/remove/${id}`).then(res =>{
+        return res.json();
+    }).then((result) =>{
+        
+        console.log(result);
+
+        if(!result.valid)
+            alert(`ERRO: ${result.message}`);
+    });
+
+    loadOccupation();
 }
