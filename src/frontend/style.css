@@ -1,0 +1,18 @@
+/* https://www.digitalocean.com/community/tutorials/css-scrollbars-pt */
+*{
+    scrollbar-width: thin;
+    scrollbar-color: gray none;
+}
+  
+*::-webkit-scrollbar {
+    width: 5px;
+}
+  
+*::-webkit-scrollbar-track {
+    background: none;
+}
+  
+*::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 20px;
+}

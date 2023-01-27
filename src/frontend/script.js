@@ -23,15 +23,15 @@ function load(){
 
                 table.innerHTML += 
                 `
-                <tr>
-                    <th scope="row">${item.id}</th>
-                    <td>${item.name}</td>
-                    <td>${occupation}</td>
-                    <td><span class="fw-semibold">R$</span>${item.salary}</td>
-                    <td class="">
+                <tr class="d-flex" style="width: 100%;">
+                    <th scope="row" class="col-1">${item.id}</th>
+                    <td class="col-4">${item.name}</td>
+                    <td class="col-3">${occupation}</td>
+                    <td class="col-2"><span class="fw-semibold">R$</span>${item.salary}</td>
+                    <td class="col-1">
                         <a onclick="editFunctionary('${item.id}')" type="button" data-bs-toggle="modal" data-bs-target="#functionary-edit" class="w-100 d-flex justify-content-center" href="#"><img src="./icons/edit.png" width="18"></a>
                     </td>
-                    <td>
+                    <td class="col-1">
                         <a onclick="removeFunctionary('${item.id}')" class="w-100 d-flex justify-content-center" href="#"><img src="./icons/delete.png" width="20"></a>
                     </td>
                 </tr>
