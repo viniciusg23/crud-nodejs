@@ -4,25 +4,41 @@ function load(){
     }).then((data)=>{
         console.log(data);
 
-        let table = document.getElementById("table-body");
-        table.innerHTML = "";
+        fetch("http://localhost:3000/occupation/all").then((res) => {return res.json()}).then((allOccupations) =>{
 
-        data.forEach((item) =>{
-            table.innerHTML += 
-            `
-            <tr>
-                <th scope="row">${item.id}</th>
-                <td>${item.name}</td>
-                <td>${item.occupation}</td>
-                <td>${item.salary}</td>
-                <td class="">
-                    <a onclick="edit('${item.id}')" class="w-100 d-flex justify-content-center"><img src="./icons/edit.png" width="18"></a>
-                </td>
-                <td>
-                    <a onclick="remove('${item.id}')" class="w-100 d-flex justify-content-center "><img src="./icons/delete.png" width="20"></a>
-                </td>
-            </tr>
-            `
+            console.log(allOccupations)
+
+            let table = document.getElementById("table-body");
+            table.innerHTML = "";
+
+            data.forEach((item) =>{
+
+                occupation = "Indefinido";
+
+                allOccupations.forEach((item2) =>{
+                    if(item2.id == item.occupation)
+                        occupation = item2.occupation;
+                })
+
+
+                table.innerHTML += 
+                `
+                <tr>
+                    <th scope="row">${item.id}</th>
+                    <td>${item.name}</td>
+                    <td>${occupation}</td>
+                    <td><span class="fw-semibold">R$</span>${item.salary}</td>
+                    <td class="">
+                        <a onclick="editFunctionary('${item.id}')" type="button" data-bs-toggle="modal" data-bs-target="#functionary-edit" class="w-100 d-flex justify-content-center" href="#"><img src="./icons/edit.png" width="18"></a>
+                    </td>
+                    <td>
+                        <a onclick="removeFunctionary('${item.id}')" class="w-100 d-flex justify-content-center" href="#"><img src="./icons/delete.png" width="20"></a>
+                    </td>
+                </tr>
+                `
+            })
+
+
         })
 
     })
@@ -31,9 +47,11 @@ function load(){
 load();
 
 function loadForm(){
+    let alert = document.getElementById("alert-functionary");
+    alert.setAttribute("class", "d-none");
+
     document.getElementById("name").value = "";
     document.getElementById("salary").value = "";
-
 
     let select = document.getElementById("occupation-select");
 
@@ -47,6 +65,9 @@ function loadForm(){
 }
 
 function validFunctionary(){
+    let alert = document.getElementById("alert-functionary");
+    alert.setAttribute("class", "d-none");
+
     const functionary = {
         name: document.getElementById("name").value,
         occupation: document.getElementById("occupation-select").value,
@@ -57,6 +78,10 @@ function validFunctionary(){
 
     if(functionary.name != '' && functionary.occupation != '' && functionary.salary != ''){
         saveFunctionary(functionary);
+    }
+    else{
+        alert.setAttribute("class", "d-block alert alert-danger");
+        alert.textContent = "Informações Inválidas";
     }
 }   
 
@@ -76,7 +101,7 @@ function saveFunctionary(functionary){
         if(result.valid){
             document.getElementById("close-functionary").click();
 
-            alert("Funcionário Cadastrado com Sucesso!");
+            // alert("Funcionário Cadastrado com Sucesso!");
         }
     });
 
@@ -84,16 +109,86 @@ function saveFunctionary(functionary){
 }
 
 
+//função para carregar o modal de edição dos funcionários
+function editFunctionary(id){
 
-function edit(id){
-    console.log(id)
+    document.getElementById("edit-alert").setAttribute("class", "d-none");
+
+    // console.log(id)
+
+    document.getElementById("name-edit").value = "";
+    document.getElementById("salary-edit").value = "";
 
 
+    let select = document.getElementById("occupation-select-edit");
+
+    fetch("http://localhost:3000/occupation/all").then((res) =>{return res.json()}).then((data) =>{
+        select.innerHTML = "<option selected disabled value=''>Selecione um Cargo</option>";
+
+        data.forEach((item) =>{
+            select.innerHTML += `<option value="${item.id}">${item.occupation}</option>`
+        })
+    })
+
+    fetch("http://localhost:3000/functionary/all").then((res) =>{return res.json()}).then((data)=>{
+        data.forEach((item) =>{
+            if(item.id == id){
+                document.getElementById("name-edit").value = `${item.name}`;
+                
+            }
+        })
+    })
+
+    document.getElementById("save-edit").setAttribute("onclick", `saveEdit('${id}')`);
 }
 
-function remove(id){
-    console.log(id)
+function saveEdit(id){
+    let alert = document.getElementById("edit-alert");
 
+    let newOccupation = document.getElementById("occupation-select-edit").value;
+    let newSalary = document.getElementById("salary-edit").value;
+
+    if(newOccupation != '' && newSalary != ''){
+        const newFunctionary = {
+            id: id,
+            name: document.getElementById("name-edit").value,
+            occupation: newOccupation,
+            salary: parseFloat(newSalary).toFixed(2)
+        }
+
+        const options = {
+            headers: {"Content-Type": "application/json"},
+            method: "POST",
+            body: JSON.stringify(newFunctionary)
+        }
+
+        fetch("http://localhost:3000/functionary/edit", options).then((res) =>{return res.json()}).then((data) =>{
+            
+        })
+
+        document.getElementById("close-functionary-edit").click();
+        load();
+
+    }
+    else{
+        alert.setAttribute("class", "d-block alert alert-danger");
+        alert.textContent = "Informações Inválidas";
+    }
+}
+
+function removeFunctionary(id){
+    console.log(id);
+
+    fetch(`http://localhost:3000/functionary/remove/${id}`).then((res) =>{return res.json()}).then((data)=>{
+        if(data.valid){
+
+        }
+        else{
+
+        }
+    })
+
+    load();
 
 }
 
@@ -102,6 +197,9 @@ function remove(id){
 
 // espaco para os métodos relacionados com as funções de trabalhadores
 function loadOccupation(){
+    let alert = document.getElementById("occupation-alert");
+    alert.setAttribute("class", "d-none");
+
     let list = document.getElementById("occupation-list");
     document.getElementById("new-occupation").value = "";
 
@@ -122,12 +220,16 @@ function loadOccupation(){
 
 function validOccupation(){
     let occupation = document.getElementById("new-occupation").value;
+    let alert = document.getElementById("occupation-alert");
+    alert.setAttribute("class", "d-none");
 
     if(occupation != ""){
         saveOccupation({occupation: occupation})
     }
     else{
-        alert("Cargo não pode estar vazio.");
+        alert.setAttribute("class", "d-block alert alert-danger");
+        alert.textContent = "Uma nova função não pode estar vazia";
+        // alert("Cargo não pode estar vazio.");
     }
 }
 

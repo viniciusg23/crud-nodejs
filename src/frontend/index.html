@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +10,7 @@
 
     <title>Crud NodeJs</title>
 </head>
-<body style="background-color: #00000010;">
+<body style="background-color: #00000010; ">
 
     <!-- modal para cadastro de funcionarios -->
     <div class="modal fade" id="form-functionary" tabindex="-1" aria-labelledby="label" aria-hidden="true">
@@ -21,6 +21,9 @@
             <button id="close-functionary" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div id="alert-functionary" class="alert alert-success d-none" role="alert">
+                    
+                </div>
                 <form>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="name" placeholder="Nome do Funcionário">
@@ -51,6 +54,48 @@
         </div>
     </div>
 
+    <!-- Modal para edição de Funcionários -->
+    <div class="modal fade" id="functionary-edit" tabindex="-1" aria-labelledby="label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="edit-label">Editar Funcionário</h1>
+            <button id="close-functionary-edit" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="edit-alert" class="d-none" role="alert">
+                    
+                </div>
+                <form>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="name-edit" placeholder="Nome do Funcionário" disabled>
+                        <label for="name">Nome</label>
+                    </div>
+
+                     
+
+                    <select class="form-select mb-3" id="occupation-select-edit" aria-label="Default select example">
+                        <option selected disabled>Selecione um Cargo</option>
+                        
+                    </select>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">R$</span>
+                        <div class="form-floating">
+                            <input type="number" min=1 class="form-control" id="salary-edit" placeholder="Salário do Funcionário">
+                            <label for="salary">Salário</label>
+                        </div>
+                        <span class="input-group-text">.00</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button id="save-edit" onclick="saveEdit()" type="button" class="d-block w-100 btn btn-primary">Salvar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
     <!-- modal para cadastro de cargos -->
     <div class="modal fade" id="form-occupation" tabindex="-1" aria-labelledby="label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -60,6 +105,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div id="occupation-alert" class="d-none" role="alert">
+                
+                </div>
                 <b class="">Lista de Cargos Existentes</b>
                 <ul id="occupation-list" class="list-group mt-2">
 
@@ -80,7 +128,7 @@
         </div>
     </div>
 
-    <div class="container-md  my-5 px-2 py-4 rounded bg-light" style="height: 85vh;">
+    <div class="container-md my-5 px-2 py-4 rounded bg-light" style="height: 85vh;">
         <div id="header" class="d-flex justify-content-between">
             <h4>Controle de Funcionários</h4>
             <div>
@@ -89,9 +137,10 @@
             </div>
             
         </div>
-        <div id="body" class="mt-4">
+        <div id="body" class="mt-4" style="height: 100%;">
+            
 
-            <table class="table">
+            <table class="table overflow-auto" style="height: 100;">
                 <thead class="table-secondary">
                   <tr class="">
                     <th scope="col" class="col-1">#id</th>

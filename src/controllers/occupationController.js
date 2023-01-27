@@ -1,4 +1,7 @@
+const { functionary } = require("../models/db");
+
 const occupationData = require("../models/db").occupation;
+const functionaryData = require("../models/db").functionary;
 
 const controller = {
     all: function(req, res){
@@ -31,6 +34,15 @@ const controller = {
         //removendo um cargo do "banco de dados"
         for(i = 0; i < occupationData.length; i++){
             if(occupationData[i].id == req.params.id){
+                for(j = 0; j < functionaryData.length; j++){
+
+                    if(functionaryData[j].occupation == req.params.id){
+                        res.send(JSON.stringify({valid: false, message: "Existe um funcionário cadastrado com esse cargo, para removê-lo deve remover ou editar o funcionário primeiro."}));
+                        return;
+                    }
+
+                }
+
                 occupationData.splice(i, 1);
             }
         }
