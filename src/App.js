@@ -1,13 +1,16 @@
-const express = require("express")
-const app = express();
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
+const bodyParser = require("body-parser");
+
 const functionary = require("./routes/functionaryRouter");
 const occupation = require("./routes/occupationRouter");
 
-const path = require("path");
+const app = express();
 const PORT = 3000;
 
-const bodyParser = require("body-parser");
 
+app.use(cors());
 app.use(bodyParser.json());
 
 
